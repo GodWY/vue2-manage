@@ -3,10 +3,10 @@
      	<head-top></head-top>
         <el-row style="margin-top: 20px;">
   			<el-col :span="14" :offset="4">
-  				<header class="form_header">选择食品种类</header>
+  				<header class="form_header">选择业主</header>
 	  			<el-form :model="categoryForm" ref="categoryForm" label-width="110px" class="form">
 		  			<el-row class="category_select">
-		  				<el-form-item label="食品种类">
+		  				<el-form-item label="业主类型">
 			  				<el-select v-model="categoryForm.categorySelect" :placeholder="selectValue.label" style="width:100%;">
 							    <el-option
 							      	v-for="item in categoryForm.categoryList"
@@ -33,21 +33,21 @@
 					<div class="add_category_button" @click="addCategoryFun">
 						<i class="el-icon-caret-top edit_icon" v-if="showAddCategory"></i>
 						<i class="el-icon-caret-bottom edit_icon" v-else slot="icon"></i>
-						<span>添加食品种类</span>
+						<span>添加业主</span>
 					</div>
 	  			</el-form>
-	  			<header class="form_header">添加食品</header>
+	  			<header class="form_header">添加业主</header>
 	  			<el-form :model="foodForm" :rules="foodrules" ref="foodForm" label-width="110px" class="form food_form">
-	  				<el-form-item label="食品名称" prop="name">
+	  				<el-form-item label="业主名称" prop="name">
 						<el-input v-model="foodForm.name"></el-input>
 					</el-form-item>
-					<el-form-item label="食品活动" prop="activity">
+					<el-form-item label="地址" prop="activity">
 						<el-input v-model="foodForm.activity"></el-input>
 					</el-form-item>
-					<el-form-item label="食品详情" prop="description">
+					<el-form-item label="手机号" prop="description">
 						<el-input v-model="foodForm.description"></el-input>
 					</el-form-item>
-					<el-form-item label="上传食品图片">
+					<el-form-item label="上传房间图片">
 						<el-upload
 						  class="avatar-uploader"
 						  :action="baseUrl + '/v1/addimg/food'"
@@ -58,7 +58,7 @@
 						  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
 						</el-upload>
 					</el-form-item>
-					<el-form-item label="食品特点">
+					<el-form-item label="房间格局">
 						<el-select v-model="foodForm.attributes" multiple placeholder="请选择">
 						    <el-option
 						      	v-for="item in attributes"
@@ -68,15 +68,19 @@
 						    </el-option>
 					 	</el-select>
 					</el-form-item>
-					<el-form-item label="食品规格">
-						<el-radio class="radio" v-model="foodSpecs" label="one">单规格</el-radio>
-  						<el-radio class="radio" v-model="foodSpecs" label="more">多规格</el-radio>
+					<el-form-item label="房间大小">
+						<el-radio class="radio" v-model="foodSpecs" label="one">三室一厅</el-radio>
+  						<el-radio class="radio" v-model="foodSpecs" label="two">二室一厅</el-radio>
+						<el-radio class="radio" v-model="foodSpecs" label="three">一室一厅</el-radio>
 					</el-form-item>
 					<el-row v-if="foodSpecs == 'one'">
-						<el-form-item label="包装费">
+						<el-form-item label="设计费">
 							<el-input-number v-model="foodForm.specs[0].packing_fee" :min="0" :max="100"></el-input-number>
 						</el-form-item>
-						<el-form-item label="价格">
+						<el-form-item label="材料费">
+							<el-input-number v-model="foodForm.specs[0].price" :min="0" :max="10000"></el-input-number>
+						</el-form-item>
+						<el-form-item label="人工费">
 							<el-input-number v-model="foodForm.specs[0].price" :min="0" :max="10000"></el-input-number>
 						</el-form-item>
 					</el-row>
@@ -109,7 +113,7 @@
 						</el-table>
 					</el-row>
 					<el-form-item>
-						<el-button type="primary" @click="addFood('foodForm')">确认添加食品</el-button>
+						<el-button type="primary" @click="addFood('foodForm')">确认添加业主</el-button>
 					</el-form-item>
 	  			</el-form>
 	  			<el-dialog title="添加规格" v-model="dialogFormVisible">
@@ -117,10 +121,10 @@
 					    <el-form-item label="规格" label-width="100px" prop="specs">
 					     	<el-input v-model="specsForm.specs" auto-complete="off"></el-input>
 					    </el-form-item>
-					    <el-form-item label="包装费" label-width="100px">
+					    <el-form-item label="材料费" label-width="100px">
 							<el-input-number v-model="specsForm.packing_fee" :min="0" :max="100"></el-input-number>
 						</el-form-item>
-						<el-form-item label="价格" label-width="100px">
+						<el-form-item label="总包" label-width="100px">
 							<el-input-number v-model="specsForm.price" :min="0" :max="10000"></el-input-number>
 						</el-form-item>
 				  	</el-form>
