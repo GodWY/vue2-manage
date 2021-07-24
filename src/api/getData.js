@@ -109,7 +109,7 @@ export const addCategory = data => fetch('/shopping/addcategory', data, 'POST');
  * 添加食品
  */
 
-export const addFood = data => fetch('/shopping/addfood', data, 'POST');
+export const addFood = data => fetch('/api/v1/owner/add', data, 'POST');
 
 
 /**
@@ -189,13 +189,13 @@ export const deleteFood = food_id => fetch('/shopping/v2/food/' + food_id, {}, '
  * 获取用户列表
  */
 
-export const getUserList = data => fetch('/v1/users/list', data);
+export const getUserList = data => fetch('/api/v1/users/list', data);
 
 /**
  * 获取用户数量
  */
 
-export const getUserCount = data => fetch('/v1/users/count', data);
+export const getUserCount = data => fetch('/api/v1/users/count', data);
 
 /**
  * 获取订单列表
@@ -213,7 +213,7 @@ export const getOrderCount = data => fetch('/bos/orders/count', data);
  * 获取用户信息
  */
 
-export const getUserInfo = user_id => fetch('/v1/user/' + user_id);
+export const getUserInfo = user_id => fetch('/api/v1/user/' + user_id);
 
 /**
  * 获取地址信息

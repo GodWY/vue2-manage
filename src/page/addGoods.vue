@@ -3,10 +3,10 @@
      	<head-top></head-top>
         <el-row style="margin-top: 20px;">
   			<el-col :span="14" :offset="4">
-  				<header class="form_header">选择业主</header>
+  				<!-- <header class="form_header">添加业主</header> -->
 	  			<el-form :model="categoryForm" ref="categoryForm" label-width="110px" class="form">
-		  			<el-row class="category_select">
-		  				<el-form-item label="业主类型">
+		  			<!-- <el-row class="category_select"> -->
+		  				<!-- <el-form-item label="业主类型">
 			  				<el-select v-model="categoryForm.categorySelect" :placeholder="selectValue.label" style="width:100%;">
 							    <el-option
 							      	v-for="item in categoryForm.categoryList"
@@ -15,11 +15,11 @@
 							      	:value="item.value">
 							    </el-option>
 						  	</el-select>
-						</el-form-item>
-					</el-row>
-					<el-row class="add_category_row" :class="showAddCategory? 'showEdit': ''">
+						</el-form-item> -->
+					<!-- </el-row> -->
+					<!-- <el-row class="add_category_row" :class="showAddCategory? 'showEdit': ''">
 						<div class="add_category">
-							<el-form-item label="食品种类" prop="name">
+							<el-form-item label="业主" prop="name">
 								<el-input v-model="categoryForm.name"></el-input>
 							</el-form-item>
 							<el-form-item label="种类描述" prop="description">
@@ -29,25 +29,25 @@
 								<el-button type="primary" @click="submitcategoryForm('categoryForm')">提交</el-button>
 							</el-form-item>
 						</div>
-					</el-row>
-					<div class="add_category_button" @click="addCategoryFun">
+					</el-row> -->
+					<!-- <div class="add_category_button" @click="addCategoryFun">
 						<i class="el-icon-caret-top edit_icon" v-if="showAddCategory"></i>
 						<i class="el-icon-caret-bottom edit_icon" v-else slot="icon"></i>
 						<span>添加业主</span>
-					</div>
+					</div> -->
 	  			</el-form>
 	  			<header class="form_header">添加业主</header>
 	  			<el-form :model="foodForm" :rules="foodrules" ref="foodForm" label-width="110px" class="form food_form">
 	  				<el-form-item label="业主名称" prop="name">
 						<el-input v-model="foodForm.name"></el-input>
 					</el-form-item>
-					<el-form-item label="地址" prop="activity">
-						<el-input v-model="foodForm.activity"></el-input>
+					<el-form-item label="地址" prop="address" >
+						<el-input v-model="foodForm.address"></el-input>
 					</el-form-item>
-					<el-form-item label="手机号" prop="description">
-						<el-input v-model="foodForm.description"></el-input>
+					<el-form-item label="手机号" prop="phone" >
+						<el-input v-model="foodForm.phone"></el-input>
 					</el-form-item>
-					<el-form-item label="上传房间图片">
+					<el-form-item label="上传房间图片" >
 						<el-upload
 						  class="avatar-uploader"
 						  :action="baseUrl + '/v1/addimg/food'"
@@ -58,7 +58,7 @@
 						  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
 						</el-upload>
 					</el-form-item>
-					<el-form-item label="房间格局">
+					<!-- <el-form-item label="房间格局">
 						<el-select v-model="foodForm.attributes" multiple placeholder="请选择">
 						    <el-option
 						      	v-for="item in attributes"
@@ -67,20 +67,24 @@
 						      	:value="item.value">
 						    </el-option>
 					 	</el-select>
-					</el-form-item>
+					</el-form-item> -->
 					<el-form-item label="房间大小">
 						<el-radio class="radio" v-model="foodSpecs" label="one">三室一厅</el-radio>
   						<el-radio class="radio" v-model="foodSpecs" label="two">二室一厅</el-radio>
 						<el-radio class="radio" v-model="foodSpecs" label="three">一室一厅</el-radio>
+						<el-radio class="radio" v-model="foodSpecs" label="three">四室一厅</el-radio>
+						<el-radio class="radio" v-model="foodSpecs" label="three">两室两厅</el-radio>
+						<el-radio class="radio" v-model="foodSpecs" label="three">三室两厅</el-radio>
+						<el-radio class="radio" v-model="foodSpecs" label="three">四室两厅</el-radio>
 					</el-form-item>
-					<el-row v-if="foodSpecs == 'one'">
-						<el-form-item label="设计费">
+					<el-row v-if="foodSpecs == '费用'">
+						<el-form-item label="设计费" >
 							<el-input-number v-model="foodForm.specs[0].packing_fee" :min="0" :max="100"></el-input-number>
 						</el-form-item>
-						<el-form-item label="材料费">
+						<el-form-item label="材料费" > 
 							<el-input-number v-model="foodForm.specs[0].price" :min="0" :max="10000"></el-input-number>
 						</el-form-item>
-						<el-form-item label="人工费">
+						<el-form-item label="人工费" >
 							<el-input-number v-model="foodForm.specs[0].price" :min="0" :max="10000"></el-input-number>
 						</el-form-item>
 					</el-row>
@@ -156,9 +160,9 @@
     			},
     			foodForm: {
     				name: '',
-    				description: '',
+    				phone: '',
     				image_path: '',
-    				activity: '',
+    				address: '',
     				attributes: [],
     				specs: [{
     					specs: '默认',
@@ -171,15 +175,9 @@
 						{ required: true, message: '请输入食品名称', trigger: 'blur' },
 					],
     			},
-    			attributes: [{
-		          	value: '新',
-		          	label: '新品'
-		        }, {
-		          	value: '招牌',
-		          	label: '招牌'
-		        },],
+    			attributes: [],
     			showAddCategory: false,
-    			foodSpecs: 'one',
+    			foodSpecs: [],
     			dialogFormVisible: false,
 		        specsForm: {
 		          	specs: '',
@@ -199,28 +197,29 @@
     	created(){
     		if (this.$route.query.restaurant_id) {
     			this.restaurant_id = this.$route.query.restaurant_id;
-    		}else{
-    			this.restaurant_id = Math.ceil(Math.random()*10);
-    			this.$msgbox({
-		          title: '提示',
-		          message: '添加食品需要选择一个商铺，先去就去选择商铺吗？',
-		          showCancelButton: true,
-		          confirmButtonText: '确定',
-		          cancelButtonText: '取消',
-		          beforeClose: (action, instance, done) => {
-		            if (action === 'confirm') {
-		              this.$router.push('/shopList');
-		              done();
-		            } else {
-		            	this.$message({
-				            type: 'info',
-				            message: '取消'
-				        });
-		              	done();
-		            }
-		          }
-		        })
-    		}
+			}
+    		// }else{
+    		// 	this.restaurant_id = Math.ceil(Math.random()*10);
+    		// 	this.$msgbox({
+		    //       title: '提示',
+		    //       message: '添加食品需要选择一个商铺，先去就去选择商铺吗？',
+		    //       showCancelButton: true,
+		    //       confirmButtonText: '确定',
+		    //       cancelButtonText: '取消',
+		    //       beforeClose: (action, instance, done) => {
+		    //         if (action === 'confirm') {
+		    //           this.$router.push('/shopList');
+		    //           done();
+		    //         } else {
+		    //         	this.$message({
+			// 	            type: 'info',
+			// 	            message: '取消'
+			// 	        });
+		    //           	done();
+		    //         }
+		    //       }
+		    //     })
+    		// }
     		this.initData();
     	},
     	computed: {
@@ -323,6 +322,8 @@
 					if (valid) {
 						const params = {
 							...this.foodForm,
+							room : this.foodSpecs,
+							// ...this.foodSpecs,
 							category_id: this.selectValue.id,
 							restaurant_id: this.restaurant_id,
 						}

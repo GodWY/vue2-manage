@@ -79,6 +79,7 @@
             async initData(){
                 try{
                     const countData = await getUserCount();
+                    console.log("userlist countData", countData)
                     if (countData.status == 1) {
                         this.count = countData.count;
                     }else{
@@ -99,8 +100,13 @@
             },
             async getUsers(){
                 const Users = await getUserList({offset: this.offset, limit: this.limit});
+                console.log("userlist: ", Users)
+                if (Users.Status != 1){
+                    console.log("Users  table: ", Users)
+                    return;
+                }
                 this.tableData = [];
-                Users.forEach(item => {
+                Users.Data.forEach(item => {
                     const tableData = {};
                     tableData.username = item.username;
                     tableData.registe_time = item.registe_time;

@@ -16,34 +16,34 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 		}
 	}
 
-	if (window.fetch && method == 'fetch') {
-		let requestConfig = {
-			credentials: 'include',
-			method: type,
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			mode: "no-cors",
-			// cache: "force-cache"
-		}
+	// if (window.fetch && method == 'fetch') {
+	// 	let requestConfig = {
+	// 		credentials: 'omit',
+	// 		method: type,
+	// 		headers: {
+	// 			// 'Accept': 'application/json',
+	// 			'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+	// 		},
+	// 		mode: "no-cors",
+	// 		// cache: "force-cache"
+	// 	}
 
 		if (type == 'POST') {
-			Object.defineProperty(requestConfig, 'body', {
-				value: JSON.stringify(data)
-			})
+			// Object.defineProperty(requestConfig, 'body', {
+			// 	value: JSON.stringify(data)
+			// })
 		}
-		
-		try {
-			const response = await fetch(url, requestConfig);
-			console.log("================================",response)
-			const responseJson = await response.json();
-			return responseJson
-		} catch (error) {
-			console.log("this is an error",error);
-			throw new Error(error)
-		}
-	} else {
+
+	// 	try {	
+	// 		const response = await fetch(url, requestConfig);
+	// 		console.log("this response",response)
+	// 		const responseJson = await response.json();
+	// 		return responseJson
+	// 	} catch (error) {
+	// 		console.log("this is an error",error);
+	// 		throw new Error(error)
+	// 	}
+	// } else {
 		return new Promise((resolve, reject) => {
 			let requestObj;
 			if (window.XMLHttpRequest) {
@@ -57,6 +57,8 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 				sendData = JSON.stringify(data);
 			}
 
+			console.log("send", sendData)
+
 			requestObj.open(type, url, true);
 			requestObj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			requestObj.send(sendData);
@@ -68,6 +70,7 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 						if (typeof obj !== 'object') {
 							obj = JSON.parse(obj);
 						}
+						console.log("resp :", obj)
 						resolve(obj)
 					} else {
 						reject(requestObj)
@@ -75,5 +78,5 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 				}
 			}
 		})
-	}
+	// }
 }
